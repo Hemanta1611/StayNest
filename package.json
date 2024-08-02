@@ -1,0 +1,19 @@
+{
+  "name": "staynest",
+  "version": "1.0.0",
+  "description": "Major Project Delta",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hemanta1611/StayNest.git"
+  },
+  "author": "Hemanta Kumar Bhoi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Hemanta1611/StayNest/issues"
+  },
+  "homepage": "https://github.com/Hemanta1611/StayNest#readme"
+}
