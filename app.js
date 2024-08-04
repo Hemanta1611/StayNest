@@ -37,9 +37,18 @@ app.get("/testListing", async (req, res) => {
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// index route:
 app.get("/listings", async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", {allListings});
+});
+
+// show route:
+app.use(express.urlencoded({extended: true}));
+app.get("/listings/:id", async(req, res) => {
+    let {id} = req.params;
+    const listing = await Listing.findById(id);
+    res.render("listings/show.ejs", {listing});
 });
 
 app.listen(8080, (req, res) =>{
