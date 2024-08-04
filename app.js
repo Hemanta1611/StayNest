@@ -34,7 +34,13 @@ app.get("/testListing", async (req, res) => {
 });
 */
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
+app.get("/listings", async (req, res) => {
+    const allListings = await Listing.find({});
+    res.render("listings/index.ejs", {allListings});
+});
 
 app.listen(8080, (req, res) =>{
     console.log("server is listening to port 8080");
