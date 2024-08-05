@@ -36,6 +36,7 @@ app.get("/testListing", async (req, res) => {
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+app.use(express.urlencoded({extended: true}));
 
 // index route:
 app.get("/listings", async (req, res) => {
@@ -43,13 +44,27 @@ app.get("/listings", async (req, res) => {
     res.render("listings/index.ejs", {allListings});
 });
 
+// new & create route:
+// it is above show route coz no confusion between '/id' & '/new'
+app.get("/listings/new", (req, res) => {
+    res.render("listings/new.ejs");
+});
+
+app.post("/listings", async (req, res) => {
+    // let {title, description, image, price, country, location} = req.body;
+    // let listing = req.body.listing;
+    const newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+});
+
 // show route:
-app.use(express.urlencoded({extended: true}));
 app.get("/listings/:id", async(req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
     res.render("listings/show.ejs", {listing});
 });
+
 
 app.listen(8080, (req, res) =>{
     console.log("server is listening to port 8080");
