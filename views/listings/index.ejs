@@ -4,23 +4,21 @@
     <form action="/listings/new" method="GET">
         <button>Create New Listing</button>
     </form>
-    <div class="container">
+    <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-2">
         <% for(let listing of allListings){ %>
-        <div class="card">
-            <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" />
-            <div class="card-body">
-                <p class="card-text">
-                    Some quick example text to build on the card title and make up the bulk
-                    of the card's content.
-                </p>
-            </div>
+        <div class="card col">
+            <a href="/listings/<%= listing._id %>" class="listing-link">
+                <img src="<%= listing.image.url %>" class="card-img-top" alt="listing_image" style="height: 20rem;" />
+                <div class="card-img-overlay">WanderLust</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        <b><a href="/listings/<%= listing._id %>"><%= listing.title %></a></b><br/>
+                        &#8377;<%= listing.price.toLocaleString("en-IN") %> / night<br/>
+                    </p>
+                </div>
+            </a>
         </div>
         <% } %>
     </div>
-    <ul>
-        <% for(let listing of allListings){ %>
-            <li><a href="/listings/<%= listing._id %>"><%= listing.title %></a></li>
-        <% } %>
-    </ul>
 </body>
 

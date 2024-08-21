@@ -1,3 +1,14 @@
+body{
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container{
+    flex: 1;
+}
+
 /* ------- Navbar -------- */
 .navbar{
     height: 5rem;
@@ -48,21 +59,61 @@
 }
 
 /* ------- listing -------- */
-body{
-    display: flex;
-    margin: 0;
-    padding: 0;
-    flex-direction: column;
-}
-
-.container {
-    display: flex;
-    flex-direction: column; /* Ensures that the cards stack vertically */
-    align-items: flex-start;
-}
 
 .card {
-    margin-bottom: 1rem; /* Adds space between cards */
-    width: 18rem; /* Ensures a consistent width for all cards */
+    margin-bottom: 2rem;
+    border: none !important; 
 }
+
+.card-img-top{
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body{
+    padding: 0 !important;
+}
+
+.card-text p{
+    font-weight: 400 !important;
+}
+
+.card-text a{
+    text-decoration: none;
+    color: black;
+}
+
+.listing-link{
+    text-decoration: none;
+    color: black;
+}
+
+/* ------- Card Effect ------- */
+.card-img-overlay{
+    opacity: 0;
+}
+
+.card-img-overlay:hover{
+    opacity: 0.3;
+}
+
+
+.add-btn{
+    background-color: #fe424d !important;
+    border: none !important;
+    margin-bottom: 2rem !important;
+}
+
+.del-btn{
+    background-color: black !important;
+    border: none !important;
+    margin-bottom: 2rem !important;
+}
+
+
+.show-img{
+    height: 40vh;
+}
+
 
