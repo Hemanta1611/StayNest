@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f2f2f2;
+            color: #721c24;
+            font-family: Arial, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .error-container {
+            text-align: center;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            padding: 20px 30px;
+        }
+        .error-title {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        .error-message {
+            font-size: 1.2rem;
+        }
+        .btn-home {
+            margin-top: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <h1 class="error-title">Oops! Something went wrong.</h1>
+        <p class="error-message"><%= message %> (Error Code: <%= statusCode %>)</p>
+        <a href="/listings" class="btn btn-danger btn-home">Go Back to Home</a>
+    </div>
+</body>
+</html>

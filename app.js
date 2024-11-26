@@ -7,11 +7,18 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const {listingSchema} = require("./schema.js");
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 async function main(params) {
     await mongoose.connect(MONGO_URL);
 };
+
+const validateListing = (req, res, next) => {
+    let {error} = listingSchema.validate(req.body);
+    if(error) {throw new ExpressError(error, 400);}
+    else {next();}
+}
 
 main().then(() => {
     console.log("connected to DB");
@@ -68,8 +75,10 @@ app.get("/listings/new", (req, res) => {
 //         next(err);
 //     }
 // });
-app.post("/listings", wrapAsync( async (req, res, next) => {
-    if(!req.body.listing) throw new ExpressError("Invalid Data", 400);
+app.post("/listings", validateListing, wrapAsync( async (req, res, next) => {
+    // if(!req.body.listing) throw new ExpressError("Invalid Data", 400);
+    // let result =listingSchema.validate(req.body.listing);
+    // if(result.error) throw new ExpressError(result.error.details[0].message, 400);
     const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
@@ -91,7 +100,7 @@ app.get("/listings/:id/edit", wrapAsync(async (req, res) => {
 }));
 
 // update route:
-app.put("/listings/:id", wrapAsync(async (req, res) => {
+app.put("/listings/:id", validateListing, wrapAsync(async (req, res) => {
     if(!req.body.listing) throw new ExpressError("Invalid Data", 400);
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
@@ -114,7 +123,8 @@ app.all("*", (req, res, next) => {
 // Error handling middleware:
 app.use((err, req, res, next) => {
     let {message, statusCode = 500} = err;
-    res.send(message).status(statusCode);
+    // res.send(message).status(statusCode);
+    res.render("error.ejs", {message, statusCode});
 });
 
 app.listen(8080, (req, res) =>{
