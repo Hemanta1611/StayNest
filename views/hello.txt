@@ -1,0 +1,4 @@
+-- Form Validation --
+-> When we enter data in the form, the browser and/or the web server will check to see the data is
+   in the correct format & within the constraints set by the application.
+

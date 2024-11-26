@@ -3,34 +3,41 @@
     <div class="col-8 offset-2">
         <body>
             <h3>Add New Listing</h3>
-            <form action="/listings" method="POST">
+            <form action="/listings" method="POST" novalidate class="needs-validation">
                 <div>
                     <label for="title" class="form-label">Title:</label>
-                    <input type="text" name="listing[title]" placeholder="Enter title" class="form-control" required><br><br>
+                    <input type="text" name="listing[title]" placeholder="Enter title" class="form-control" required>
+                    <div class="valid-feedback">Title Looks Good!</div><br><br>
                 </div>
                 <div>
                     <label for="description" class="form-label">Description:</label><br>
-                    <textarea name="listing[description]" placeholder="Enter description" class="form-control"></textarea><br><br>
+                    <textarea name="listing[description]" placeholder="Enter description" class="form-control" required></textarea>
+                    <div class="invalid-feedback">Description should be valid</div><br><br>
                 </div>
                 <div>
                     <label for="image-filename" class="form-label" >Image-Filename:</label>
-                    <input type="text" name="listing[image][filename]" placeholder="Enter image filename" class="form-control" required><br><br>
+                    <input type="text" name="listing[image][filename]" placeholder="Enter image filename" class="form-control" required>
+                    <div class="invalid-feedback">Image Filename should be valid</div><br><br>
                 </div>
                 <div>
                     <label for="image" class="form-label ">Image-Link:</label>
-                    <input type="text" name="listing[image][url]" placeholder="Enter image URL/Link" class="form-control" required><br><br>
+                    <input type="text" name="listing[image][url]" placeholder="Enter image URL/Link" class="form-control" required>
+                    <div class="invalid-feedback">Image URL/Link should be valid</div><br><br>
                 </div>
                 <div>
                     <label for="price" class="form-label">Price:</label>
-                    <input type="number" name="listing[price]" placeholder="Enter price" class="form-control"><br><br>
+                    <input type="number" name="listing[price]" placeholder="Enter price" class="form-control" required>
+                    <div class="invalid-feedback">Please Enter a Valid Price</div><br><br>
                 </div>
                 <div>
                     <label for="location" class="form-label">Location:</label>
-                    <input type="text" name="listing[location]" placeholder="Enter location" class="form-control"><br><br>
+                    <input type="text" name="listing[location]" placeholder="Enter location" class="form-control" required>
+                    <div class="invalid-feedback">Location should be valid</div><br><br>
                 </div>
                 <div>
                     <label for="country" class="form-label">Country:</label>
-                    <input type="text" name="listing[country]" placeholder="Enter country" class="form-control"><br><br>
+                    <input type="text" name="listing[country]" placeholder="Enter country" class="form-control" required>
+                    <div class="invalid-feedback">Country should be valid</div><br><br>
                 </div>
                 <div>
                     <label for=""></label>

@@ -55,12 +55,16 @@ app.get("/listings/new", (req, res) => {
     res.render("listings/new.ejs");
 });
 
-app.post("/listings", async (req, res) => {
+app.post("/listings", async (req, res, next) => {
     // let {title, description, image, price, country, location} = req.body;
     // let listing = req.body.listing;
-    const newListing = new Listing(req.body.listing);
-    await newListing.save();
-    res.redirect("/listings");
+    try {
+        const newListing = new Listing(req.body.listing);
+        await newListing.save();
+        res.redirect("/listings");
+    } catch (err) {
+        next(err);
+    }
 });
 
 // show route:
@@ -92,6 +96,11 @@ app.delete("/listings/:id", async (req, res) => {
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
     res.redirect("/listings");
+});
+
+// Error handling middleware:
+app.use((err, req, res, next) => {
+    res.send("Something went wrong");
 });
 
 app.listen(8080, (req, res) =>{
