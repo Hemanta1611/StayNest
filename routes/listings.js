@@ -27,13 +27,13 @@ const validateListing = (req, res, next) => {
     else {next();}
 }
 
-// index route:
+// Index Route:
 router.get("/", wrapAsync(async (req, res) => {
     const allListings = await Listing.find({});
     res.render("listings/index.ejs", {allListings});
 }));
 
-// new & create route:
+// New & Create Route:
 // it is above show route coz no confusion between '/id' & '/new'
 router.get("/new", (req, res) => {
     res.render("listings/new.ejs");
@@ -56,38 +56,50 @@ router.post("/", validateListing, wrapAsync( async (req, res, next) => {
     // if(result.error) throw new ExpressError(result.error.details[0].message, 400);
     const newListing = new Listing(req.body.listing);
     await newListing.save();
+    req.flash("successMsg", "Successfully made a new listing!");
+    // req.flash("error", "Error in creating a new listing!");
     res.redirect("/listings");
 }));
 
-// show route:
+// Show Route:
 router.get("/:id", wrapAsync(async(req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id).populate("reviews");
+    if(!listing) {
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listings");
+    }
     res.render("listings/show.ejs", {listing});
 }));
 
 
-// edit route:
+// Edit Route:
 router.get("/:id/edit", wrapAsync(async (req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
+    if(!listing) {
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listings");
+    }
     res.render("listings/edit.ejs", {listing});
 }));
 
-// update route:
+// Update Route:
 router.put("/:id", validateListing, wrapAsync(async (req, res) => {
     if(!req.body.listing) throw new ExpressError("Invalid Data", 400);
     let {id} = req.params;
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
+    req.flash("successMsg", "Successfully updated a listing!");
     res.redirect("/listings");
     // res.redirect("/listings/${id}");
 }));
 
-// delete route:
+// Delete Route:
 router.delete("/:id", wrapAsync(async (req, res) => {
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);
+    req.flash("successMsg", "Successfully deleted a listing!");
     res.redirect("/listings");
 }));
 
