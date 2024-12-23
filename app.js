@@ -61,6 +61,7 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.use((req, res, next) => {
     res.locals.successMsg = req.flash("successMsg");
     res.locals.error = req.flash("error");
+    res.locals.currentUser = req.user;
     next();
 });
 
