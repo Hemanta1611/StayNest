@@ -60,6 +60,7 @@ router.post("/", isLoggedIn, validateListing, wrapAsync( async (req, res, next) 
     // let result =listingSchema.validate(req.body.listing);
     // if(result.error) throw new ExpressError(result.error.details[0].message, 400);
     const newListing = new Listing(req.body.listing);
+    newListing.owner = req.user._id;
     await newListing.save();
     req.flash("successMsg", "Successfully made a new listing!");
     // req.flash("error", "Error in creating a new listing!");
@@ -69,7 +70,7 @@ router.post("/", isLoggedIn, validateListing, wrapAsync( async (req, res, next) 
 // Show Route:
 router.get("/:id", wrapAsync(async(req, res) => {
     let {id} = req.params;
-    const listing = await Listing.findById(id).populate("reviews");
+    const listing = await Listing.findById(id).populate("reviews").populate("owner");
     if(!listing) {
         req.flash("error", "Listing not found!");
         return res.redirect("/listings");
