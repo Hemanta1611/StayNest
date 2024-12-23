@@ -1,0 +1,38 @@
+<% layout("/layouts/boilerplate") %>
+<div class="row mt-3">
+    <h1 class="col-6 offset-3">SignUp on Wanderlust</h1>
+    <hr class="custom-line col-6 offset-3">
+    <div class="col-6 offset-3">
+        <br><br>
+        <form action="/signup" method="POST" class="needs-validation" novalidate>
+            <div>
+                <label for="username" class="form-label">Username:</label>
+                <input type="text" name="username" placeholder="Enter username" class="form-control" id="username" required>
+                <div class="valid-feedback">Looks Good!</div>
+                <br>
+            </div>
+            <div>
+                <label for="email" class="form-label">Email:</label>
+                <input type="text" name="email" placeholder="Enter email" class="form-control" id="email" required>
+                <br>
+            </div>
+            <div>
+                <label for="password" class="form-label">Password:</label>
+                <input type="text" name="password" placeholder="Enter Password" class="form-control" id="password" required>
+                <br>
+            </div>
+            <button class="btn btn-success">Sign Up</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    .custom-line {
+        width: 50%;
+        height: 4px;
+        background: black;
+        box-shadow: 0 0 10px 2px rgba(0, 0, 0, 0.6), 0 0 20px 5px rgba(0, 0, 0, 0.4), 0 0 40px 10px rgba(0, 0, 0, 0.2);
+        border: none;
+        margin: auto;
+    }
+</style>
