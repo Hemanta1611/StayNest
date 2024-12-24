@@ -1,10 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const wrapAsync = require("../utils/wrapAsync.js");
-const {listingSchema} = require("../schema.js");
 const ExpressError = require("../utils/ExpressError.js");
 const Listing = require("../models/listing.js");
-const {isLoggedIn} = require("../middleware.js");
+const {isLoggedIn, isOwner, validateListing} = require("../middleware.js");
 
 
 /*
@@ -21,12 +20,6 @@ router.get("/testListing", async (req, res) => {
     res.send("successful testing");
 });
 */
-
-const validateListing = (req, res, next) => {
-    let {error} = listingSchema.validate(req.body);
-    if(error) {throw new ExpressError(error, 400);}
-    else {next();}
-}
 
 // Index Route:
 router.get("/", wrapAsync(async (req, res) => {
@@ -80,7 +73,7 @@ router.get("/:id", wrapAsync(async(req, res) => {
 
 
 // Edit Route:
-router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res) => {
+router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let {id} = req.params;
     const listing = await Listing.findById(id);
     if(!listing) {
@@ -91,9 +84,14 @@ router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res) => {
 }));
 
 // Update Route:
-router.put("/:id", isLoggedIn, validateListing, wrapAsync(async (req, res) => {
+router.put("/:id", isLoggedIn, isOwner, validateListing, wrapAsync(async (req, res) => {
     if(!req.body.listing) throw new ExpressError("Invalid Data", 400);
     let {id} = req.params;
+    // let listing = await Listing.findById(id);
+    // if(!listing.owner._id.equals(res.locals.currentUser._id)) {
+    //     req.flash("error", "You do not have permission to edit this listing!");
+    //     return res.redirect(`/listings/${id}`);
+    // }
     await Listing.findByIdAndUpdate(id, {...req.body.listing});
     req.flash("successMsg", "Successfully updated a listing!");
     res.redirect("/listings");
@@ -101,7 +99,7 @@ router.put("/:id", isLoggedIn, validateListing, wrapAsync(async (req, res) => {
 }));
 
 // Delete Route:
-router.delete("/:id", isLoggedIn, wrapAsync(async (req, res) => {
+router.delete("/:id", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let {id} = req.params;
     let deletedListing = await Listing.findByIdAndDelete(id);
     console.log(deletedListing);

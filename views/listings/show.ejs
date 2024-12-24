@@ -16,14 +16,12 @@
         </body>
     </div>
 </div>
-<% if(currentUser && currentUser._id.equals(listing.owner._id)) { %>
 <div class="row-2">
     <a class="btn btn-dark add-btn col offset-1" href="/listings/<%= listing._id %>/edit" style="text-decoration: none;">Edit the Listing</a>
     <form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
         <button class="btn btn-dark del-btn col offset-1">Delete This Listing</button>
     </form>
 </div>
-<% } %>
 <hr>
 <div class="col-10 offset-1">
     <h4>Leave a Review</h4>
